@@ -1,5 +1,5 @@
 import React from 'react';
-import { queryRemoteit, options, data, R3_ACCESS_KEY_ID, R3_SECRET_ACCESS_KEY, SIGNATURE_ALGORITHM, SIGNED_HEADERS, DEFAULT_PROFILE} from "./query";
+import { queryRemoteit, options, data, R3_ACCESS_KEY_ID, R3_SECRET_ACCESS_KEY, SIGNATURE_ALGORITHM, SIGNED_HEADERS, DEFAULT_PROFILE} from "./utils";
 const httpSignature = require("http-signature");
 const https = require('https');
 function App() {
