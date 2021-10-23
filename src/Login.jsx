@@ -23,6 +23,7 @@ const Login = (key, value) => {
         }).then( r => {
             localStorage.setItem("username", email);
             localStorage.setItem("authHash", r.data.service_authhash);
+            localStorage.setItem('token', r.data.token)
             history.push('/')
         }).catch(e => {
             setError(e.response.data.reason);
