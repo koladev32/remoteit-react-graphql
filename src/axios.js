@@ -5,7 +5,8 @@ import {useHistory} from "react-router-dom";
 const axiosService = axios.create({
     baseURL: "https://api.remote.it",
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'apikey': "QTNGNDRGMEItRkYzOC00N0U3LTg2QkEtRTkxMURBNUNFOTI1"
     }
 });
 
@@ -14,8 +15,6 @@ axiosService.interceptors.request.use(async (config) => {
 
     if (token){
         config.headers.token = token;
-        config.headers.apikey = process.env.REACT_DEV_API_KEY;
-
         console.debug('[Request]', config.baseURL + config.url, JSON.stringify(token));
     }
 
@@ -25,7 +24,6 @@ axiosService.interceptors.request.use(async (config) => {
 
 axiosService.interceptors.response.use(
     (res) => {
-        // @ts-ignore
         console.debug('[Response]', res.config.baseURL + res.config.url, res.status, res.data);
         return Promise.resolve(res);
     },
@@ -74,8 +72,8 @@ const refreshAuthLogic = async (failedRequest) => {
 
 createAuthRefreshInterceptor(axiosService, refreshAuthLogic);
 
-export function fetcher(url) {
-    return axiosService.post(url).then((res) => res.data);
+export function fetcher(url, data) {
+    return axiosService.post(url, data).then((res) => res.data);
 }
 
 export default axiosService;
