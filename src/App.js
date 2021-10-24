@@ -6,9 +6,10 @@ import {
 import Login from "./Login";
 import Home from "./Home";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './App.css';
 function App() {
   return (
-    <div>
+    <div className="App">
       <Router>
               <Switch>
                   <Route exact path="/login" component={Login} />

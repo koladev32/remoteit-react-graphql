@@ -79,11 +79,6 @@ const Home = () => {
 
     return (
         <div>
-            <nav className="navbar navbar-dark bg-primary">
-                <a className="navbar-brand mx-5">
-                        REMOTE.IT DEVICES/EVENTS MONITORING
-                </a>
-            </nav>
             <div className="m-5">
                 <h3 className="h3">Number of devices: {dataDevices.data?.data?.login?.devices?.total}</h3>
                 <table className="table table-hover">

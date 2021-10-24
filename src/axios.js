@@ -3,10 +3,10 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import {useHistory} from "react-router-dom";
 
 const axiosService = axios.create({
-    baseURL: "https://api.remote.it",
+    baseURL: process.env.REACT_API_URL,
     headers: {
         'Content-Type': 'application/json',
-        'apikey': "QTNGNDRGMEItRkYzOC00N0U3LTg2QkEtRTkxMURBNUNFOTI1"
+        'apikey': process.env.REACT_DEV_API_KEY
     }
 });
 

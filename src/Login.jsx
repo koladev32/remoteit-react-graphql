@@ -18,7 +18,7 @@ const Login = (key, value) => {
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "apikey": "QTNGNDRGMEItRkYzOC00N0U3LTg2QkEtRTkxMURBNUNFOTI1"
+                "apikey": process.env.REACT_DEV_API_KEY
             }
         }).then( r => {
             localStorage.setItem("username", email);
@@ -32,12 +32,12 @@ const Login = (key, value) => {
     }
 
     return (
-        <div className="w-25">
+        <div className="w-25 mh-100">
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="form-group m-2">
                     <label htmlFor="email">Email address</label>
                     <input
-                        className="form-control"
+                        className="form-control my-2"
                         required
                         id="email"
                         type="email"
@@ -46,10 +46,10 @@ const Login = (key, value) => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group m-2">
                     <label htmlFor="password">Password</label>
                     <input
-                        className="form-control"
+                        className="form-control my-2"
                         id="password"
                         required
                         type="password"
