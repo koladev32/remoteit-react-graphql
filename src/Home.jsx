@@ -59,36 +59,54 @@ const eventsQuery = {
 
 const Home = () => {
 
-    const dataDevices = useSWR('/graphql/v1', () => fetcher('/graphql/v1', devicesQuery));
+    const dataDevices = useSWR('devices', () => fetcher('/graphql/v1', devicesQuery));
 
-    const dataEvents = useSWR('/graphql/v1', () => fetcher('/graphql/v1', eventsQuery));
+    const dataEvents = useSWR('events', () => fetcher('/graphql/v1', eventsQuery));
 
+
+    function formatDate(date){
+        let newDate = new Date(date);
+
+        return newDate.toLocaleDateString()
+    }
+    function getStatusColor(status){
+        if (status === 'active'){
+            return 'text-success'
+        }else {
+            return 'text-danger'
+        }
+    }
 
     return (
         <div>
-            <div>
-                <h3 className="h3">Number of devices: {dataDevices.data?.data?.login?.devices.total}</h3>
-                <table className="table">
-                    <thead className="thead-dark">
+            <nav className="navbar navbar-dark bg-primary">
+                <a className="navbar-brand mx-5">
+                        REMOTE.IT DEVICES/EVENTS MONITORING
+                </a>
+            </nav>
+            <div className="m-5">
+                <h3 className="h3">Number of devices: {dataDevices.data?.data?.login?.devices?.total}</h3>
+                <table className="table table-hover">
+                    <thead>
                     <tr>
-                        <th scope="col">id</th>
+                        <th scope="col">Device id</th>
                         <th scope="col">Name</th>
                         <th scope="col">hardwareId</th>
-                        <th scope="col">created</th>
-                        <th scope="col">state</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">State</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        dataDevices.data?.data?.login?.devices.items.map((device, index) =>
+                        dataDevices.data?.data?.login?.devices?.items.map((device, index) =>
                             {
                                 console.log(device);
                                 return <tr>
                                     <th scope="row">{device.id}</th>
                                     <td>{device.name}</td>
                                     <td>{device.hardwareId}</td>
-                                    <td>{device.created}</td>
-                                    <td>{device.state}</td>
+                                    <td>{formatDate(device.created)}</td>
+                                    <td className={getStatusColor(device.state)}>{device.state}</td>
                                 </tr>
                             }
                         )
@@ -97,10 +115,12 @@ const Home = () => {
                 </table>
             </div>
 
-            <div>
+            <hr />
+
+            <div className="m-5">
                 <h3 className="h3">Number of events: {dataEvents.data?.data?.login?.events?.total}</h3>
-                <table className="table">
-                    <thead className="thead-dark">
+                <table className="table table-hover">
+                    <thead>
                     <tr>
                         <th scope="col">Type</th>
                         <th scope="col">Owner</th>
@@ -114,9 +134,9 @@ const Home = () => {
                         dataEvents.data?.data?.login?.events?.items?.map((event, index) => (
                             <tr>
                                 <th scope="row">{event.type}</th>
-                                <td>{event.owner.email}</td>
-                                <td>{event.actor.email}</td>
-                                <td>{event.target.map((target, index) => (
+                                <td>{event.owner?.email}</td>
+                                <td>{event.actor?.email}</td>
+                                <td>{event.target?.map((target, index) => (
                                     <p>{target.name} |</p>
                                 ))}</td>
                                 <td>{event.timestamp}</td>

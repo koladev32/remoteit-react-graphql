@@ -8,7 +8,7 @@ import Home from "./Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
-    <div className="container-fluid">
+    <div>
       <Router>
               <Switch>
                   <Route exact path="/login" component={Login} />
