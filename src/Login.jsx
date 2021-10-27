@@ -12,7 +12,7 @@ const Login = (key, value) => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post('https://api.remote.it/apv/v27/user/login', {
+        axios.post(`${process.env.REACT_APP_API_URL}/apv/v27/user/login`, {
             username: email,
             password: password
         }, {
@@ -24,7 +24,7 @@ const Login = (key, value) => {
             localStorage.setItem("username", email);
             localStorage.setItem("authHash", r.data.service_authhash);
             localStorage.setItem('token', r.data.token)
-            history.push('/')
+            history.push('/home')
         }).catch(e => {
             setError(e.response.data.reason);
         })
