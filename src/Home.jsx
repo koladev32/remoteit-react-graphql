@@ -7,7 +7,7 @@ const devicesQuery = {
     query: `{
   login {
     email
-    devices(size: 1000, from: 0) {
+    devices(size: 10, from: 0) {
       total
       hasMore
       items {
@@ -16,10 +16,7 @@ const devicesQuery = {
         hardwareId
         created
         state
-        services {
-          id
-          name
-        }
+        endpoint{geo{latitude longitude}}
       }
     }
   }
@@ -30,7 +27,7 @@ const devicesQuery = {
 const eventsQuery = {
     query: `{
   login {
-    events {
+    events(size: 10, from: 0) {
       hasMore
       total
       items {
@@ -78,7 +75,7 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div className="container">
             <div className="m-5">
                 <h3 className="h3">Number of devices: {dataDevices.data?.data?.login?.devices?.total}</h3>
                 <table className="table table-hover">
@@ -89,21 +86,21 @@ const Home = () => {
                         <th scope="col">hardwareId</th>
                         <th scope="col">Created</th>
                         <th scope="col">State</th>
+                        <th scope="col">Geo-localisation</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
                         dataDevices.data?.data?.login?.devices?.items.map((device, index) =>
-                            {
-                                console.log(device);
-                                return <tr>
-                                    <th scope="row">{device.id}</th>
-                                    <td>{device.name}</td>
-                                    <td>{device.hardwareId}</td>
-                                    <td>{formatDate(device.created)}</td>
-                                    <td className={getStatusColor(device.state)}>{device.state}</td>
-                                </tr>
-                            }
+                            <tr>
+                                <th scope="row">{device.id}</th>
+                                <td>{device.name}</td>
+                                <td>{device.hardwareId}</td>
+                                <td>{formatDate(device.created)}</td>
+                                <td className={getStatusColor(device.state)}>{device.state}</td>
+                                <td><a href={`https://www.google.com/maps/place/${device.endpoint.geo.latitude},${device.endpoint.geo.longitude}`} target="_blank"
+                                       rel="noopener noreferrer">See localisation</a></td>
+                            </tr>
                         )
                     }
                     </tbody>
